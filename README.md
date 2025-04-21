@@ -1,44 +1,97 @@
-# Swagger Petstore Sample
+Swagger Petstore API Test Automation
+=====================================
 
-## Overview
-This is the pet store sample hosted at https://petstore3.swagger.io. For other versions, check the branches.
-We welcome suggestion both the code and the API design.
-To make changes to the design itself, take a look at https://github.com/swagger-api/swagger-petstore/blob/master/src/main/resources/openapi.yaml.
+This project provides a REST API test automation suite for the Swagger Petstore `User` endpoint using:
 
-This is a java project to build a stand-alone server which implements the OpenAPI 3 Spec.  You can find out
-more about both the spec and the framework at http://swagger.io.
+- Java 17+
+- JUnit 5
+- Jackson (for JSON data binding)
+- RestAssured
+- Maven
+- Surefire Reports
+- Optional: Docker for environment isolation
 
-This sample is based on [swagger-inflector](https://github.com/swagger-api/swagger-inflector), and provides an example of swagger / OpenAPI 3 petstore.
+-----------------------------------------------------
+Setup Steps
+-----------------------------------------------------
 
-### To run (with Maven)
-To run the server, run this task:
+1. Clone the Repository
 
-```
-mvn package jetty:run
-```
+   git clone https://github.com/your-username/swagger-petstore.git
+   cd swagger-petstore
 
-This will start Jetty embedded on port 8080.
+2. Ensure Java 17+ is installed
 
-### To run (via Docker)
+   Check your version:
+   java -version
 
-Expose port 8080 from the image and access petstore via the exposed port. You can then add and delete pets as you see fit.
+3. Build the Project
 
+   mvn clean compile
 
-*Example*:
+-----------------------------------------------------
+Running the Tests
+-----------------------------------------------------
 
-```
-docker build -t swaggerapi/petstore3:unstable .
-```
+You can run all test cases using Maven:
 
-```
-docker pull swaggerapi/petstore3:unstable
-docker run  --name swaggerapi-petstore3 -d -p 8080:8080 swaggerapi/petstore3:unstable
-```
+   mvn test
 
+The test results will be printed in the console and available in the generated report at:
 
-### Testing the server
-Once started, you can navigate to http://localhost:8080/api/v3/openapi.json to view the Swagger Resource Listing.
-This tells you that the server is up and ready to demonstrate Swagger.
+   target/surefire-reports/
 
-### Using the UI
-There is an HTML5-based API tool bundled in this sample--you can view it it at [http://localhost:8080](http://localhost:8080). This lets you inspect the API using an interactive UI.  You can access the source of this code from [here](https://github.com/swagger-api/swagger-ui)
+-----------------------------------------------------
+Test Report
+-----------------------------------------------------
+
+After execution, test reports are generated in:
+
+   target/surefire-reports/
+
+Check the .txt files or open index.html if configured for HTML output.
+
+-----------------------------------------------------
+Test Data & Data Provider
+-----------------------------------------------------
+
+User data is provided through an external JSON file located in:
+
+   src/test/resources/data/userData.json
+
+This file is loaded in the tests using:
+
+   List<User> users = TestDataReader.readUsers("data/userData.json");
+
+This allows data-driven tests for Create, Update, and Delete operations.
+
+-----------------------------------------------------
+Docker Support (Optional Bonus)
+-----------------------------------------------------
+
+You can run this project in a Docker container.
+
+1. Create a file named Dockerfile with the following content:
+
+   FROM maven:3.9.4-eclipse-temurin-17-alpine
+   WORKDIR /app
+   COPY . .
+   RUN mvn clean install
+   CMD ["mvn", "test"]
+
+2. Build and run the Docker container:
+
+   docker build -t swagger-petstore-tests .
+   docker run swagger-petstore-tests
+
+-----------------------------------------------------
+Summary of Covered Features
+-----------------------------------------------------
+
+- Create User
+- Get User by Username
+- Update User
+- Delete User
+- Data-driven testing via external JSON
+- Maven Surefire reporting
+- Optional Docker execution
