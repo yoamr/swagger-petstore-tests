@@ -67,25 +67,6 @@ This file is loaded in the tests using:
 This allows data-driven tests for Create, Update, and Delete operations.
 
 -----------------------------------------------------
-Docker Support (Optional Bonus)
------------------------------------------------------
-
-You can run this project in a Docker container.
-
-1. Create a file named Dockerfile with the following content:
-
-   FROM maven:3.9.4-eclipse-temurin-17-alpine
-   WORKDIR /app
-   COPY . .
-   RUN mvn clean install
-   CMD ["mvn", "test"]
-
-2. Build and run the Docker container:
-
-   docker build -t swagger-petstore-tests .
-   docker run swagger-petstore-tests
-
------------------------------------------------------
 Summary of Covered Features
 -----------------------------------------------------
 
@@ -95,4 +76,3 @@ Summary of Covered Features
 - Delete User
 - Data-driven testing via external JSON
 - Maven Surefire reporting
-- Optional Docker execution
