@@ -18,6 +18,7 @@ Setup Steps
 1. Clone the Repository
 
    git clone https://github.com/yoamr/swagger-petstore-tests/tree/feature/api-tests
+
    cd swagger-petstore
 
 2. Ensure Java 17+ is installed
